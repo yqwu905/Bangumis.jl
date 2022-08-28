@@ -1,9 +1,11 @@
 using Bangumis
 using Test
 using Dates: DateTime
+using SQLite: DB
 import Logging
 
 Logging.global_logger(Logging.SimpleLogger(stdout, Logging.Debug))
+cd("../")
 
 @testset "Utils" begin
     @test Bangumis.Utils.date_parse("2022-02-01") == DateTime(2022, 02, 01)
@@ -19,4 +21,8 @@ end
     @test haskey(Bangumis.config, "mikan")
     @test haskey(Bangumis.config, "bangumi")
     @test haskey(Bangumis.config, "aria2")
+end
+
+@testset "Database" begin
+    @test Bangumis.DB.prepare_db() isa DB
 end
