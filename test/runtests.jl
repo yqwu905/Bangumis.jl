@@ -5,7 +5,7 @@ using SQLite: DB
 import Logging
 
 Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
-cd("../")
+cd(dirname(dirname(pathof(Bangumis))))
 
 @testset "Utils" begin
     @test Bangumis.Utils.date_parse("2022-02-01") == DateTime(2022, 02, 01)
