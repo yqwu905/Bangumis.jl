@@ -10,3 +10,10 @@ using Dates: DateTime
     @test Bangumis.Utils.date_parse("fdjkalsjfdklas") == DateTime(1970)
     @test Bangumis.Utils.date_parse("0") == DateTime(0)
 end
+
+@testset "Config" begin
+    @test haskey(Bangumis.config, "index")
+    @test haskey(Bangumis.config, "mikan")
+    @test haskey(Bangumis.config, "bangumi")
+    @test haskey(Bangumis.config, "aria2")
+end
