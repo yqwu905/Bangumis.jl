@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   CodeCov:
     runs-on: ubuntu-latest
-    step:
+    steps:
       - uses: julia-actions/julia-processcoverage@v1
       - uses: codecov/codecov-action@v2
         with:
