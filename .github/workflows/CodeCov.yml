@@ -1,6 +1,9 @@
 name: CodeCov
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - src/*
 
 jobs:
   CodeCov:
