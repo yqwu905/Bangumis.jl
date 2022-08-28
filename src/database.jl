@@ -24,11 +24,12 @@ function verify_db_table(db::SQLite.DB, tbl_name::AbstractString, tbl_cols::Data
     for i in 1:size(cols, 1)
         for j in 1:size(cols, 2)
             if (cols[i, j]!==tbl_cols[i, j])
-                @error "Database $db mismatch require columns at ($i, $j): $(cols[i, j]) is given, $(tbl_cols[i, j]) is required."
+                @error "Database $db, Table $tbl_name mismatch require columns at ($i, $j): $(cols[i, j])::$(typeof(cols[i, j])) is given, $(tbl_cols[i, j])::$(typeof(tbl_cols[i, j])) is required."
                 return false
             end
         end
     end
+    @debug "Database $db, Table $tbl_name structure verified."
     return true
 end
 
