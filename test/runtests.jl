@@ -1,6 +1,9 @@
 using Bangumis
 using Test
 using Dates: DateTime
+import Logging
+
+Logging.global_logger(Logging.SimpleLogger(stdout, Logging.Debug))
 
 @testset "Utils" begin
     @test Bangumis.Utils.date_parse("2022-02-01") == DateTime(2022, 02, 01)
