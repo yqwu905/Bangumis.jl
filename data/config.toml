@@ -1,0 +1,22 @@
+[index]
+db = 'data/index.db'
+max_not_exist_bangumis = 500
+
+[bangumi]
+must =  []
+
+[mikan]
+[mikan.group]
+exclude_id = []
+exclude_name = []
+
+[aria2]
+host = "Your Aria2 Server Host"
+port = 6800
+[aria2.default]
+  dir = "/data/bangumis/"
+  split = 5
+  min-split-size = "20M"
+  seed-time = 43200.0
+  seed-ratio = 10.0
+  timeout = 60
