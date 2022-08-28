@@ -4,7 +4,9 @@ using TOML: parsefile
 
 export config
 
-config = parsefile("$(dirname(dirname(pathof(Bangumis))))/data/config.toml")
+const DEFAULT_CONFIG_FILE = joinpath(
+    dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
+config = parsefile(DEFAULT_CONFIG_FILE)
 
 include("utils.jl")
 include("database.jl")
