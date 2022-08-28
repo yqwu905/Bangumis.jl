@@ -4,7 +4,7 @@ using Dates: DateTime
 using SQLite: DB
 import Logging
 
-Logging.global_logger(Logging.SimpleLogger(stdout, Logging.Debug))
+Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
 cd("../")
 
 @testset "Utils" begin
