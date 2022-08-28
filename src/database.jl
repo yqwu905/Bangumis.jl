@@ -1,6 +1,7 @@
 module DB
 
 using SQLite
+using DataFrames
 using ..Bangumis: config
 
 export prepare_db
