@@ -1,9 +1,6 @@
 name: CodeCov
 
-on:
-  push:
-    paths:
-      - src/*
+on: push
 
 jobs:
   CodeCov:
