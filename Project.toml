@@ -3,6 +3,10 @@ uuid = "ad8dfdfc-bf80-4d0a-b5f0-e1f877673ab7"
 authors = ["pingline <pingline@outlook.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+
 [compat]
 julia = "17"
 
