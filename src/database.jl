@@ -26,6 +26,10 @@ const EPISODES_TBL_DF = DataFrame(
     pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
+"""
+    verify_db_table(db, tbl_name, tbl_cols)
+Compare table `tbl_name` structure from database `db` with given structure `tbl_cols`.
+"""
 function verify_db_table(db::SQLite.DB, tbl_name::AbstractString, tbl_cols::DataFrame)::Bool
     cols = DataFrame(SQLite.columns(db, tbl_name))
     if (size(cols) != size(tbl_cols))
