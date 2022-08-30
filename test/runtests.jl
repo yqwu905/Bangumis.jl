@@ -33,13 +33,20 @@ end
 
 @testset "Database" begin
     @test Bangumis.DB.prepare_db() isa DB
-    subject_db = Bangumis.DB.prepare_db("test/testcases/database/db_case1.sqlite3")
-    @test subject_db isa DB
-    @test Bangumis.DB.verify_db_table(subject_db, "SUBJECT_CASE", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "EMPTY_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "SUBJECT_WITH_DEFAULT_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "SUBJECT_WRONG_KEYS_CASE1", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "SUBJECT_WRONG_KEYS_CASE2", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "SUBJECT_WRONG_TYPE_CASE1", Bangumis.DB.SUBJECTS_TBL_DF)
-    @test !Bangumis.DB.verify_db_table(subject_db, "SUBJECT_WRONG_TYPE_CASE2", Bangumis.DB.SUBJECTS_TBL_DF)
+    test_verify_db = Bangumis.DB.prepare_db("test/testcases/database/db_case1.sqlite3")
+    @test test_verify_db isa DB
+    @test Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_CASE", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EMPTY_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_WITH_DEFAULT_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_WRONG_KEYS_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_WRONG_KEYS_CASE_2", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_WRONG_TYPE_CASE_1", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_WRONG_TYPE_CASE_2", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "SUBJECT_MISSING_COLS_CASE", Bangumis.DB.SUBJECTS_TBL_DF)
+    @test Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_CASE", Bangumis.DB.EPISODES_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_MISSING_COLS_CASE", Bangumis.DB.EPISODES_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WITH_DEFAULT_CASE", Bangumis.DB.EPISODES_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_KEY_CASE_1", Bangumis.DB.EPISODES_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_KEY_CASE_2", Bangumis.DB.EPISODES_TBL_DF)
+    @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_TYPE_CASE", Bangumis.DB.EPISODES_TBL_DF)
 end
