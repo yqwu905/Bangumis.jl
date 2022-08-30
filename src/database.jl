@@ -3,6 +3,7 @@ module DB
 using SQLite
 using DataFrames
 using ..Bangumis: config
+using ..Bangumis.Utils: missing_eq
 
 export prepare_db
 
@@ -23,7 +24,7 @@ function verify_db_table(db::SQLite.DB, tbl_name::AbstractString, tbl_cols::Data
     end
     for i in 1:size(cols, 1)
         for j in 1:size(cols, 2)
-            if (cols[i, j] !== tbl_cols[i, j])
+            if (!missing_eq(cols[i, j], tbl_cols[i, j]))
                 @error "Database $db, Table $tbl_name mismatch require columns at ($i, $j): $(cols[i, j])::$(typeof(cols[i, j])) is given, $(tbl_cols[i, j])::$(typeof(tbl_cols[i, j])) is required."
                 return false
             end
