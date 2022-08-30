@@ -17,6 +17,15 @@ const SUBJECTS_TBL_DF = DataFrame(
     pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
+const EPISODES_TBL_DF = DataFrame(
+    cid = collect(0:10),
+    name = ["id", "type", "name", "name_cn", "sort", "airdate", "comment", "duration", "desc", "disc", "ep"],
+    type = ["INTEGER", "INTEGER", "TEXT", "TEXT", "INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "INTEGER", "INTEGER"],
+    notnull = [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0],
+    dflt_value = ones(Missing, 11),
+    pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+)
+
 function verify_db_table(db::SQLite.DB, tbl_name::AbstractString, tbl_cols::DataFrame)::Bool
     cols = DataFrame(SQLite.columns(db, tbl_name))
     if (size(cols) != size(tbl_cols))
