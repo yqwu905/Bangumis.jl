@@ -26,4 +26,14 @@ function date_parse(s::AbstractString)::DateTime
     return DateTime(1970)
 end
 
+function missing_eq(a, b)::Bool
+    if (ismissing(a) && ismissing(b))
+        return true
+    elseif (ismissing(a) || ismissing(b))
+        return false
+    else
+        return a == b
+    end
+end
+
 end
