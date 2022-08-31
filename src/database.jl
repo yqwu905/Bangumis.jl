@@ -85,6 +85,24 @@ function prepare_db(filename::Union{AbstractString,Nothing} = nothing)::SQLite.D
         @debug "Using specified database file $filename"
     end
     db = SQLite.DB(filename)
+    tbls_name = map(x->x.name, SQLite.tables(db))
+    if ("SUBJECTS" ∉ tbls_name)
+        @info "SUBJECTS not exist in $db, creating."
+        SQLite.execute(db, generate_create_tbl_statement("SUBJECTS", SUBJECTS_TBL_DF))
+    else
+        if (!verify_db_table(db, "SUBJECTS", SUBJECTS_TBL_DF))
+            throw(DatabaseError(db, "Invalid SUBJECTS table structure"))
+        end
+    end
+    if ("EPISODES" ∉ tbls_name)
+        @info "EPISODES not exist in $db, creating."
+        SQLite.execute(db, generate_create_tbl_statement("EPISODES", EPISODES_TBL_DF))
+    else
+        if (!verify_db_table(db, "EPISODES", EPISODES_TBL_DF))
+            throw(DatabaseError(db, "Invalid EPISODES table structure"))
+        end
+    end
+    db
 end
 
 end
