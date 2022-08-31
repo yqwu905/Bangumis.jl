@@ -26,6 +26,28 @@ const EPISODES_TBL_DF = DataFrame(
     pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
+
+"""
+    generate_create_tbl_statement(tbl_name, tbl_cols)
+Generate sql to create table with table name `tbl_name` and columns `tbl_cols`.
+"""
+function generate_create_tbl_statement(tbl_name::AbstractString, tbl_cols::DataFrame)::AbstractString
+    create_statement = "CREATE TABLE \"$tbl_name\"(\n"
+    pk = ""
+    for i in 1:size(tbl_cols, 1)
+        create_statement *= "\t\"$(tbl_cols[i, :name])\"\t$(tbl_cols[i, :type])"
+        if (tbl_cols[i, :notnull]==1)
+            create_statement *= "\tNOT NULL"
+        end
+        if (tbl_cols[i, :pk]==1)
+            pk = tbl_cols[i, :name]
+        end
+        create_statement *= ",\n"
+    end
+    create_statement *= "\tPRIMARY KEY(\"$pk\")\n)"
+    return create_statement
+end
+
 """
     verify_db_table(db, tbl_name, tbl_cols)
 Compare table `tbl_name` structure from database `db` with given structure `tbl_cols`.
