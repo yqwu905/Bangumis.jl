@@ -6,6 +6,9 @@ import Logging
 
 Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
 cd(dirname(dirname(pathof(Bangumis))))
+rm("test/tmp", recursive=true, force=true)
+mkdir("test/tmp")
+cp("test/testcases/database", "test/tmp/database")
 
 @testset "Utils" begin
     # date_parse
