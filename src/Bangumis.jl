@@ -1,8 +1,12 @@
 module Bangumis
 
 using TOML: parsefile
+using Dates: DateTime
+import Logging
 
-export config
+Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
+
+export config, Subject, Episode
 
 struct Subject
     id::Integer
@@ -27,7 +31,7 @@ struct Episode
     comment::AbstractString
     duration::AbstractString
     desc::AbstractString
-    disc::AbstractString
+    disc::Integer
 end
 
 const DEFAULT_CONFIG_FILE = joinpath(
