@@ -44,10 +44,10 @@ function generate_create_tbl_statement(tbl_name::AbstractString, tbl_cols::DataF
     pk = ""
     for i in 1:size(tbl_cols, 1)
         create_statement *= "\t\"$(tbl_cols[i, :name])\"\t$(tbl_cols[i, :type])"
-        if (tbl_cols[i, :notnull]==1)
+        if (tbl_cols[i, :notnull] == 1)
             create_statement *= "\tNOT NULL"
         end
-        if (tbl_cols[i, :pk]==1)
+        if (tbl_cols[i, :pk] == 1)
             pk = tbl_cols[i, :name]
         end
         create_statement *= ",\n"
@@ -85,7 +85,7 @@ function prepare_db(filename::Union{AbstractString,Nothing} = nothing)::SQLite.D
         @debug "Using specified database file $filename"
     end
     db = SQLite.DB(filename)
-    tbls_name = map(x->x.name, SQLite.tables(db))
+    tbls_name = map(x -> x.name, SQLite.tables(db))
     if ("SUBJECTS" ∉ tbls_name)
         @info "SUBJECTS not exist in $db, creating."
         SQLite.execute(db, generate_create_tbl_statement("SUBJECTS", SUBJECTS_TBL_DF))
