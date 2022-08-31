@@ -1,9 +1,17 @@
 module DB
 
+using Base
 using SQLite
 using DataFrames
 using ..Bangumis: config
 using ..Bangumis.Utils: missing_eq
+
+struct DatabaseError <: Exception
+    db::SQLite.DB
+    msg::AbstractString
+end
+
+Base.showerror(io::IO, e::DatabaseError) = print(io, "Database $(e.db.file): $(e.msg)")
 
 export prepare_db
 
