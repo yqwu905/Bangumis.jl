@@ -49,4 +49,9 @@ end
     @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_KEY_CASE_1", Bangumis.DB.EPISODES_TBL_DF)
     @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_KEY_CASE_2", Bangumis.DB.EPISODES_TBL_DF)
     @test !Bangumis.DB.verify_db_table(test_verify_db, "EPISODES_WRONG_TYPE_CASE", Bangumis.DB.EPISODES_TBL_DF)
+    test_create_db = Bangumis.DB.prepare_db("test/testcases/database/tmp_create_db_1.sqlite3")
+    execute(test_create_db, Bangumis.DB.generate_create_tbl_statement("EPISODES", Bangumis.DB.EPISODES_TBL_DF))
+    execute(test_create_db, Bangumis.DB.generate_create_tbl_statement("SUBJECTS", Bangumis.DB.SUBJECTS_TBL_DF))
+    @test Bangumis.DB.verify_db_table(test_create_db, "EPISODES", Bangumis.DB.EPISODES_TBL_DF)
+    @test Bangumis.DB.verify_db_table(test_create_db, "SUBJECTS", Bangumis.DB.SUBJECTS_TBL_DF)
 end
