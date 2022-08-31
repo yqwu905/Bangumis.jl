@@ -106,14 +106,14 @@ function prepare_db(filename::Union{AbstractString,Nothing} = nothing)::SQLite.D
     db
 end
 
-function push!(db, s::Subject)
+function push!(db::SQLite.DB, s::Subject)
     params =(s.id, s.url, s.type, s.name, s.name_cn, s.summary, format(s.air_date, "Y-m-d"), s.air_weekday, s.images[:large],  s.images[:common], s.images[:medium], s.images[:small], s.images[:grid])
     SQLite.execute(db,
         "INSERT INTO SUBJECTS VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params
     )
 end
 
-function push!(db, ep::Episode)
+function push!(db::SQLite.DB, ep::Episode)
     params =(ep.id, ep.type, ep.name, ep.name_cn, ep.sort, format(ep.air_date, "Y-m-d"), ep.comment, ep.duration, ep.desc, ep.disc, ep.ep) 
     SQLite.execute(db,
         "INSERT INTO EPISODES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params
