@@ -2,7 +2,7 @@ module Utils
 
 using Dates: DateTime, DateFormat
 
-export date_parse
+export date_parse, missing_eq
 
 const DATE_FORMAT = DateFormat.([
     "d.m.y",
