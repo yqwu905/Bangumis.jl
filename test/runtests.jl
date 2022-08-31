@@ -1,7 +1,7 @@
 using Bangumis
 using Test
 using Dates: DateTime
-using SQLite: DB
+using SQLite: DB, execute
 import Logging
 
 Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
