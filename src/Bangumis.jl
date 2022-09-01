@@ -28,10 +28,11 @@ struct Episode
     sort::Integer
     ep::Integer
     air_date::DateTime
-    comment::AbstractString
+    comment::Integer
     duration::AbstractString
     desc::AbstractString
     disc::Integer
+    subject_id::Integer
 end
 
 const DEFAULT_CONFIG_FILE = joinpath(

@@ -27,12 +27,12 @@ const SUBJECTS_TBL_DF = DataFrame(
 )
 
 const EPISODES_TBL_DF = DataFrame(
-    cid = collect(0:10),
-    name = ["id", "type", "name", "name_cn", "sort", "airdate", "comment", "duration", "desc", "disc", "ep"],
-    type = ["INTEGER", "INTEGER", "TEXT", "TEXT", "INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "INTEGER", "INTEGER"],
-    notnull = [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0],
-    dflt_value = ones(Missing, 11),
-    pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    cid = collect(0:11),
+    name = ["id", "type", "name", "name_cn", "sort", "airdate", "comment", "duration", "desc", "disc", "ep", "subject_id"],
+    type = ["INTEGER", "INTEGER", "TEXT", "TEXT", "INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "INTEGER", "INTEGER", "INTEGER"],
+    notnull = [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1],
+    dflt_value = ones(Missing, 12),
+    pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
 
@@ -114,7 +114,7 @@ function push!(db::SQLite.DB, s::Subject)
 end
 
 function push!(db::SQLite.DB, ep::Episode)
-    params =(ep.id, ep.type, ep.name, ep.name_cn, ep.sort, format(ep.air_date, "Y-m-d"), ep.comment, ep.duration, ep.desc, ep.disc, ep.ep) 
+    params =(ep.id, ep.type, ep.name, ep.name_cn, ep.sort, format(ep.air_date, "Y-m-d"), ep.comment, ep.duration, ep.desc, ep.disc, ep.ep, ep.subject_id)
     SQLite.execute(db,
         "INSERT INTO EPISODES VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params
     )
