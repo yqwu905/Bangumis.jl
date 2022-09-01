@@ -34,4 +34,4 @@ end
     @test haskey(Bangumis.config, "aria2")
 end
 
-include("test/database.jl")
+include("database.jl")
