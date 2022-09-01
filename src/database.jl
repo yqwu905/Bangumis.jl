@@ -7,14 +7,14 @@ using Dates: format
 using ..Bangumis: config, Episode, Subject
 using ..Bangumis.Utils: missing_eq
 
+export prepare_db, DatabaseError, push!
+
 struct DatabaseError <: Exception
     db::SQLite.DB
     msg::AbstractString
 end
 
 Base.showerror(io::IO, e::DatabaseError) = print(io, "Database $(e.db.file): $(e.msg)")
-
-export prepare_db
 
 # Table Definition
 const SUBJECTS_TBL_DF = DataFrame(
