@@ -11,6 +11,7 @@ mkdir("test/tmp")
 cp("test/testcases/database", "test/tmp/database")
 
 @testset "Config" begin
+    @test haskey(Bangumis.config, "http")
     @test haskey(Bangumis.config, "index")
     @test haskey(Bangumis.config, "mikan")
     @test haskey(Bangumis.config, "bangumi")
