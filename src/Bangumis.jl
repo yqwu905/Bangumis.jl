@@ -7,6 +7,7 @@ import Logging
 Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
 
 export config, Subject, Episode
+export Job, Result, create_jobs_pool, job_executator
 
 struct Subject
     id::Integer
@@ -41,5 +42,7 @@ config = parsefile(DEFAULT_CONFIG_FILE)
 
 include("utils.jl")
 include("database.jl")
+include("schedule.jl")
+using .Schedule
 
 end
