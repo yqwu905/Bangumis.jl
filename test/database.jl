@@ -39,3 +39,7 @@ println("##################################")
     @test_throws Bangumis.DB.DatabaseError Bangumis.DB.prepare_db("test/tmp/database/db_case5.sqlite3")
     @test_throws Bangumis.DB.DatabaseError Bangumis.DB.prepare_db("test/tmp/database/db_case6.sqlite3")
 end
+
+@testset "Database push" begin
+    
+end

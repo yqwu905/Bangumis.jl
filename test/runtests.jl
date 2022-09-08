@@ -18,5 +18,5 @@ cp("test/testcases/database", "test/tmp/database")
     @test haskey(Bangumis.config, "aria2")
 end
 
-include("utils.jl")
-include("database.jl")
+# include("utils.jl")
+# include("database.jl")
