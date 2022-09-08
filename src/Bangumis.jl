@@ -46,8 +46,6 @@ include("database.jl")
 include("schedule.jl")
 using .Schedule
 export Job, Result, create_jobs_pool, job_executator
-include("bangumitv.jl")
-using .BangumiTV
 
 const pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
 id = 0
