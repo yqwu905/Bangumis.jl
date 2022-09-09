@@ -38,8 +38,6 @@ end
 const DEFAULT_CONFIG_FILE = joinpath(
     dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
 const config = parsefile(DEFAULT_CONFIG_FILE)
-println(Int)
-println(typeof(config["http"]["max_redirects"]))
 
 include("utils.jl")
 using .Utils
