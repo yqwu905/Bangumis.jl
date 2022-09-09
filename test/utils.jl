@@ -19,3 +19,12 @@ end
     @test !Bangumis.Utils.missing_eq(2, 1)
     @test !Bangumis.Utils.missing_eq(1, DateTime(1970))
 end
+
+@testset "http_get" begin
+    r = parse(http_get("https://httpbin.org/user-agent"))
+    @test r["user-agent"] == Bangumis.config["http"]["user_agent"]
+    r = parse(http_get("https://httpbin.org/redirect/$(Bangumis.config["http"]["max_redirects"]+1)"))
+    @test isempty(r)
+    r = parse(http_get("https://httpbin.org/redirect/$(Bangumis.config["http"]["max_redirects"])"))
+    @test !isempty(r)
+end
