@@ -1,6 +1,7 @@
 using Bangumis
 using Test
 using Dates: DateTime
+using JSON
 using SQLite: DB, execute
 import Logging
 
@@ -18,5 +19,5 @@ cp("test/testcases/database", "test/tmp/database")
     @test haskey(Bangumis.config, "aria2")
 end
 
-# include("utils.jl")
+include("utils.jl")
 # include("database.jl")
