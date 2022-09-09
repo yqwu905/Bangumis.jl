@@ -36,7 +36,7 @@ struct Episode
 end
 
 const DEFAULT_CONFIG_FILE = joinpath(
-    dirname(dirname(pathof(@__MODULE__))), "data", "conf.toml")
+    dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
 const config = parsefile(DEFAULT_CONFIG_FILE)
 
 include("utils.jl")
