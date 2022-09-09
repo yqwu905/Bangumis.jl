@@ -7,7 +7,7 @@ pool_size = 1000
 user_agent = "Mozilla/5.0 (X11; Linux i686; rv:10.0) Gecko/20100101 Firefox/10.0"
 connect_timeout = 5
 read_timeout = 5
-max_retries = 5
+max_redirects = 10
 
 [index]
 db = 'data/index.db'
