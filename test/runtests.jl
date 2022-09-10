@@ -1,6 +1,7 @@
 using Bangumis
 using Test
 using Dates: DateTime
+using JSON
 using SQLite: DB, execute
 import Logging
 
@@ -10,6 +11,9 @@ rm("test/tmp", recursive = true, force = true)
 mkdir("test/tmp")
 cp("test/testcases/database", "test/tmp/database")
 
+println(Int)
+println(typeof(config["http"]["max_redirects"]))
+
 @testset "Config" begin
     @test haskey(Bangumis.config, "http")
     @test haskey(Bangumis.config, "index")
@@ -18,5 +22,5 @@ cp("test/testcases/database", "test/tmp/database")
     @test haskey(Bangumis.config, "aria2")
 end
 
-# include("utils.jl")
+include("utils.jl")
 # include("database.jl")

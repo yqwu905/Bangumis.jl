@@ -2,6 +2,8 @@ module Utils
 
 using Dates: DateTime, DateFormat
 using HTTP
+using Base
+using JSON
 using ..Bangumis: config
 
 export date_parse, missing_eq, http_get
@@ -44,9 +46,18 @@ function missing_eq(a, b)::Bool
 end
 
 function http_get(url::AbstractString)::HTTP.Messages.Response
+    @debug "Send HTTP GET request to $url"
     HTTP.get(url, headers = Dict("User-Agent" => config["http"]["user_agent"]),
         connect_timeout = config["http"]["connect_timeout"], readtimeout=config["http"]["read_timeout"],
-        retries=config["http"]["max_retries"])
+        retry=false, redirect_limit = config["http"]["max_redirects"])
+end
+
+function Base.parse(res::HTTP.Messages.Response)
+    if (res.status==200)
+        return JSON.parse(String(res.body))
+    else
+        return Dict()
+    end
 end
 
 end
