@@ -35,9 +35,19 @@ struct Episode
     subject_id::Integer
 end
 
+function f((k,v))
+           if (v isa Dict)
+               return k=>Dict(Iterators.map(f, v))
+           elseif (v isa Integer)
+               return k=>convert(Int, v)
+           else
+               return k=>v
+           end
+       end
+
 const DEFAULT_CONFIG_FILE = joinpath(
     dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
-const config = parsefile(DEFAULT_CONFIG_FILE)
+const config = Dict(Iterators.map(f, parsefile(DEFAULT_CONFIG_FILE)))
 
 include("utils.jl")
 using .Utils
