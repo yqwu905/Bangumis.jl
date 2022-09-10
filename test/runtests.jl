@@ -23,4 +23,4 @@ println(typeof(config["http"]["max_redirects"]))
 end
 
 include("utils.jl")
-# include("database.jl")
+include("database.jl")
