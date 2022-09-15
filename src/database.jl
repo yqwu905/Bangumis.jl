@@ -18,21 +18,21 @@ Base.showerror(io::IO, e::DatabaseError) = print(io, "Database $(e.db.file): $(e
 
 # Table Definition
 const SUBJECTS_TBL_DF = DataFrame(
-    cid = collect(0:12),
-    name = ["id", "url", "type", "name", "name_cn", "summary", "air_date", "air_weekday", "image_large", "image_common", "image_medium", "image_small", "image_grid"],
-    type = ["INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "TEXT", "TEXT", "INTEGER", "TEXT", "TEXT", "TEXT", "TEXT", "TEXT"],
-    notnull = [1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-    dflt_value = ones(Missing, 13),
-    pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    cid=collect(0:12),
+    name=["id", "url", "type", "name", "name_cn", "summary", "air_date", "air_weekday", "image_large", "image_common", "image_medium", "image_small", "image_grid"],
+    type=["INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "TEXT", "TEXT", "INTEGER", "TEXT", "TEXT", "TEXT", "TEXT", "TEXT"],
+    notnull=[1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+    dflt_value=ones(Missing, 13),
+    pk=[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
 const EPISODES_TBL_DF = DataFrame(
-    cid = collect(0:11),
-    name = ["id", "type", "name", "name_cn", "sort", "airdate", "comment", "duration", "desc", "disc", "ep", "subject_id"],
-    type = ["INTEGER", "INTEGER", "TEXT", "TEXT", "INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "INTEGER", "INTEGER", "INTEGER"],
-    notnull = [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1],
-    dflt_value = ones(Missing, 12),
-    pk = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    cid=collect(0:11),
+    name=["id", "type", "name", "name_cn", "sort", "airdate", "comment", "duration", "desc", "disc", "ep", "subject_id"],
+    type=["INTEGER", "INTEGER", "TEXT", "TEXT", "INTEGER", "TEXT", "INTEGER", "TEXT", "TEXT", "INTEGER", "INTEGER", "INTEGER"],
+    notnull=[1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1],
+    dflt_value=ones(Missing, 12),
+    pk=[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 )
 
 
@@ -78,7 +78,7 @@ function verify_db_table(db::SQLite.DB, tbl_name::AbstractString, tbl_cols::Data
     return true
 end
 
-function prepare_db(filename::Union{AbstractString,Nothing} = nothing)::SQLite.DB
+function prepare_db(filename::Union{AbstractString,Nothing}=nothing)::SQLite.DB
     if (isnothing(filename))
         filename = config["index"]["db"]
         @debug "No database specified, use default value $filename"
