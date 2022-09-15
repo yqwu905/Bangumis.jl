@@ -25,6 +25,8 @@ end
 Base.show(io::IO, j::Job) = print(io, "Job $(j.id) $(String(Symbol(j.f)))($(join(j.params, ", "))), Callback: $(ismissing(j.callback) ? "None" : j.callback.id)")
 Base.show(io::IO, r::Result) = print(io, "Job $(r.id) $(r.success ? "successed" * ", Result: " * string(r.res) : "failed"), Callback: $(ismissing(r.callback) ? "None" : String(Symbol(r.callback.f)))")
 
+Job(id::Integer, f::Function) = Job(id, f, (), 0, missing)
+Job(id::Integer, f::Function, params::Tuple) = Job(id, f, params, 0, missing)
 Job(id::Integer, f::Function, params::Tuple, callback::Union{Job,Missing}) = Job(id, f, params, 0, callback)
 Job(id::Integer, f::Function, callback::Union{Job,Missing}) = Job(id, f, (), 0, callback)
 create_jobs_pool(size::Integer=1000) = (Channel{Job}(size), Channel{Result}(size))
