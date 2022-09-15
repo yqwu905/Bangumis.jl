@@ -65,7 +65,7 @@ function daemon(pool::Channel{Job}, result::Channel{Result})
             @debug "$res ended."
         elseif res.success
             @debug "Add new job $(res.callback) for parent job $(res.id)"
-            put!(pool, Job(res.callback.id, res.callback.f, (res.res..., res.callback.params...), res.callback))
+            put!(pool, Job(res.callback.id, res.callback.f, (res.res..., res.callback.params...), res.callback.callback))
         else
             @warn "Job $(res.id) failed, any callback job will be prevent."
         end
