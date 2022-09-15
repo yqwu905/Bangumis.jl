@@ -14,7 +14,7 @@ struct Subject
     summary::AbstractString
     air_date::DateTime
     air_weekday::Integer
-    images::NamedTuple{(:large, :common, :medium, :small, :grid), Tuple{AbstractString, AbstractString, AbstractString, AbstractString, AbstractString}}
+    images::NamedTuple{(:large, :common, :medium, :small, :grid),Tuple{AbstractString,AbstractString,AbstractString,AbstractString,AbstractString}}
 end
 
 struct Episode
@@ -32,15 +32,15 @@ struct Episode
     subject_id::Integer
 end
 
-function f((k,v))
-           if (v isa Dict)
-               return k=>Dict(Iterators.map(f, v))
-           elseif (v isa Integer)
-               return k=>convert(Int, v)
-           else
-               return k=>v
-           end
-       end
+function f((k, v))
+    if (v isa Dict)
+        return k => Dict(Iterators.map(f, v))
+    elseif (v isa Integer)
+        return k => convert(Int, v)
+    else
+        return k => v
+    end
+end
 
 const DEFAULT_CONFIG_FILE = joinpath(
     dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")

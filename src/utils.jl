@@ -47,13 +47,13 @@ end
 
 function http_get(url::AbstractString)::HTTP.Messages.Response
     @debug "Send HTTP GET request to $url"
-    HTTP.get(url, headers = Dict("User-Agent" => config["http"]["user_agent"]),
-        connect_timeout = config["http"]["connect_timeout"], readtimeout=config["http"]["read_timeout"],
-        retry=false, redirect_limit = config["http"]["max_redirects"])
+    HTTP.get(url, headers=Dict("User-Agent" => config["http"]["user_agent"]),
+        connect_timeout=config["http"]["connect_timeout"], readtimeout=config["http"]["read_timeout"],
+        retry=false, redirect_limit=config["http"]["max_redirects"])
 end
 
 function Base.parse(res::HTTP.Messages.Response)
-    if (res.status==200)
+    if (res.status == 200)
         return JSON.parse(String(res.body))
     else
         return Dict()
