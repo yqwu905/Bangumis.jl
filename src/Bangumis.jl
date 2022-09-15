@@ -56,6 +56,7 @@ using .Schedule
 export Job, Result, create_jobs_pool, job_executator
 
 const pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
+const dump_res = Channel{Result}(100000)
 id = 0
 
 function daemon(pool::Channel{Job}, result::Channel{Result})
@@ -63,11 +64,13 @@ function daemon(pool::Channel{Job}, result::Channel{Result})
     for res in result
         if (ismissing(res.callback))
             @debug "$res ended."
+            push!(dump_res, res)
         elseif res.success
             @debug "Add new job $(res.callback) for parent job $(res.id)"
             put!(pool, Job(res.callback.id, res.callback.f, (res.res..., res.callback.params...), res.callback.callback))
         else
             @warn "Job $(res.id) failed, any callback job will be prevent."
+            push!(dump_res, res)
         end
     end
 end
