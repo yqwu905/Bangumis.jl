@@ -2,9 +2,6 @@ module Bangumis
 
 using TOML: parsefile
 using Dates: DateTime
-import Logging
-
-Logging.global_logger(Logging.ConsoleLogger(stdout, Logging.Debug))
 
 export config, Subject, Episode, start_main_thread
 
