@@ -51,6 +51,7 @@ using .Utils
 export http_get
 include("database.jl")
 include("schedule.jl")
+include("test.jl")
 using .Schedule
 export Job, Result, create_jobs_pool, job_executator
 
