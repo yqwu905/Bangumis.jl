@@ -17,9 +17,17 @@ Represent a source site.
 struct Source
     name::AbstractString
     url::AbstractString
-    query::Union{Missing, Function}
-    download::Union{Missing, Function}
-    index::Union{Missing, Function}
+    query::Union{Missing,Function}
+    download::Union{Missing,Function}
+    index::Union{Missing,Function}
 end
+
+Base.show(io::IO, s::Source) = print(
+    io,
+    "Source: $(s.name) at $(s.url)
+    - Query: $(ismissing(s.query) ? "Not support" : "Support")
+    - Download: $(ismissing(s.download) ? "Not support" : "Support")
+    - Index: $(ismissing(s.index) ? "Not support" : "Support")"
+)
 
 end
