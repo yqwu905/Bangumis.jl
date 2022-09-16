@@ -54,6 +54,7 @@ include("schedule.jl")
 include("test.jl")
 using .Schedule
 export Job, Result, create_jobs_pool, job_executator
+include("sources.jl")
 
 const pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
 const dump_res = Channel{Result}(100000)
