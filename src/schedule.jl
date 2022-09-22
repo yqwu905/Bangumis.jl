@@ -31,7 +31,8 @@ Job(id::Integer, f::Function, params::Tuple, callback::Union{Job,Missing}) = Job
 Job(id::Integer, f::Function, callback::Union{Job,Missing}) = Job(id, f, (), 0, callback)
 create_jobs_pool(size::Integer=1000) = (Channel{Job}(size), Channel{Result}(size))
 
-function job_executator(pool::Channel{Job}, res::Channel{Result}, max_retries::Integer=5)
+function job_executator(id::Integer, pool::Channel{Job}, res::Channel{Result}, max_retries::Integer=5)
+    @info "Executor $id started."
     for job in pool
         try
             r = job.f(job.params...)
@@ -46,6 +47,7 @@ function job_executator(pool::Channel{Job}, res::Channel{Result}, max_retries::I
             end
         end
     end
+    @info "Executor $id terminated."
 end
 
 end

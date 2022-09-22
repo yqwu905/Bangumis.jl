@@ -3,7 +3,7 @@ module Bangumis
 using TOML: parsefile
 using Dates: DateTime
 
-export config, Subject, Episode, start_main_thread
+export config, Subject, Episode, start_main_thread, close_main_thread
 
 struct Subject
     id::Integer
@@ -56,12 +56,12 @@ using .Schedule
 export Job, Result, create_jobs_pool, job_executator
 include("sources.jl")
 
-const pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
-const dump_res = Channel{Result}(100000)
-id = 0
+pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
+dump_res = Channel{Result}(100000)
+executators = Task[]
 
 function daemon(pool::Channel{Job}, result::Channel{Result})
-    global id
+    @info "Daemon thread started."
     for res in result
         if (ismissing(res.callback))
             @debug "$res ended."
@@ -74,18 +74,37 @@ function daemon(pool::Channel{Job}, result::Channel{Result})
             push!(dump_res, res)
         end
     end
+    @info "Daemon thread terminated."
 end
 
 function start_main_thread()
-    global pool, res
-    @info "Main thread start."
+    global pool, res, executators
+    executators = Task[]
+    if (!isopen(pool))
+        pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
+    end
+    @info "Main thread started."
     @info "Starting $(config["base"]["async"]) executators..."
     for i in 1:config["base"]["async"]
-        @async job_executator(pool, res)
-        @info "Executator $i start."
+        push!(executators, @async job_executator(i, pool, res))
     end
     @async daemon(pool, res)
-    @info "Daemon thread start."
+end
+
+function close_main_thread()
+    global pool, res
+    close(pool)
+    for i in pool
+        @debug "Drop job $i"
+    end
+    for executator in executators
+        wait(executator)
+    end
+    close(res)
+    for i in res
+        @debug "Drop result $i"
+    end
+    @info "Main thread terminated."
 end
 
 end
