@@ -11,9 +11,6 @@ rm("test/tmp", recursive = true, force = true)
 mkdir("test/tmp")
 cp("test/testcases/database", "test/tmp/database")
 
-println(Int)
-println(typeof(config["http"]["max_redirects"]))
-
 @testset "Config" begin
     @test haskey(Bangumis.config, "http")
     @test haskey(Bangumis.config, "index")
