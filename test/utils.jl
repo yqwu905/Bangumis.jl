@@ -9,6 +9,7 @@ println("##################################")
     @test Bangumis.Utils.date_parse("31.07.2022") == DateTime(2022, 07, 31)
     @test Bangumis.Utils.date_parse("fdjkalsjfdklas") == DateTime(1970)
     @test Bangumis.Utils.date_parse("0") == DateTime(0)
+    @test Bangumis.Utils.date_parse(nothing) == DateTime(1970)
 end
 
 @testset "missing_eq" begin
