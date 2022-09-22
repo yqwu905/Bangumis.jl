@@ -19,6 +19,26 @@ const DATE_FORMAT = DateFormat.([
     "y-m-dTH:M:S"
 ])
 
+"""
+    date_parse(s)
+Parse given object to datetime, return `DateTime(1970)` if parse failed.
+
+# Arguments
+- `s::Any`: Parse will only work when `s` is `AbstractString`, otherwise `DateTime(1970)` will be returned.
+
+# Examples
+```jldoctest
+julia> date_parse(nothing)
+1970-01-01T00:00:00
+julia> date_parse("1980-1-2")
+1980-01-02T00:00:00
+```
+"""
+function date_parse(s)::DateTime
+    @warn "解析非字符对象: $s::$(typeof(s))"
+    return DateTime(1970)
+end
+
 function date_parse(s::AbstractString)::DateTime
     @debug "(日期解析) 输入: $s"
     d = tryparse(DateTime, s)
