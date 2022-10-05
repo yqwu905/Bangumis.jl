@@ -30,4 +30,6 @@ Base.show(io::IO, s::Source) = print(
     - Index: $(ismissing(s.index) ? "Not support" : "Support")"
 )
 
+include("sources/bangumis.jl")
+
 end
