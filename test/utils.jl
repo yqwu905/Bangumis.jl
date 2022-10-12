@@ -29,3 +29,12 @@ end
     r = parse(http_get("https://httpbin.org/redirect/$(Bangumis.config["http"]["max_redirects"])"))
     @test !isempty(r)
 end
+
+@testset "dynamic_parse_int" begin
+    i = BigInt(typemax(Int)) + 1
+    @test Bangumis.Utils.dynamic_parse_int(string(i)) == i
+    @test Bangumis.Utils.dynamic_parse_int(string(i)) isa widen(Int)
+    i = BigInt(typemax(Int128)) + 1
+    @test Bangumis.Utils.dynamic_parse_int(string(i)) == i
+    @test Bangumis.Utils.dynamic_parse_int(string(i)) isa BigInt
+end

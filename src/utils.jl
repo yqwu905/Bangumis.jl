@@ -6,7 +6,7 @@ using Base
 using JSON
 using ..Bangumis: config
 
-export date_parse, missing_eq, http_get
+export date_parse, missing_eq, http_get, dynamic_parse_int
 
 struct HTTPGetRequests
     id::Integer
@@ -78,6 +78,21 @@ function Base.parse(res::HTTP.Messages.Response)
     else
         return Dict()
     end
+end
+
+function dynamic_parse_int(s)::Integer
+    T = Int
+    x = 0
+    while (true)
+        try
+            x = parse(T, s)
+            break
+        catch e
+            e isa OverflowError || rethrow(e)
+            T = widen(T)
+        end
+    end
+    x
 end
 
 end
