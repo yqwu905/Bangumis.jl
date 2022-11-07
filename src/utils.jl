@@ -80,6 +80,22 @@ function Base.parse(res::HTTP.Messages.Response)
     end
 end
 
+"""
+    dynamic_parse_int(s)
+Parse `s` to `Integer` with type dynamically according to its value.
+The narrowest type is `Int` associate with your arch, and will be widen to 
+`BigInt` until it can store `s`.
+
+# Examples
+```julia-repl
+julia> s1 = string(BigInt(typemax(Int128)) + 1);
+julia> s2 = string(BigInt(typemax(Int128)) - 1);
+julia> typeof(dynamic_parse_int(s1))
+BigInt
+julia> typeof(dynamic_parse_int(s2))
+Int128
+```
+"""
 function dynamic_parse_int(s)::Integer
     T = Int
     x = 0
