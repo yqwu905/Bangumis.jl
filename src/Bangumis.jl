@@ -55,6 +55,7 @@ include("test.jl")
 using .Schedule
 export Job, Result, create_jobs_pool, job_executator
 include("sources.jl")
+include("BT/bittorrent.jl")
 
 pool, res = Bangumis.Schedule.create_jobs_pool(config["base"]["pool_size"])
 dump_res = Channel{Result}(100000)
