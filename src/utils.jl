@@ -55,6 +55,18 @@ function date_parse(s::AbstractString)::DateTime
     return DateTime(1970)
 end
 
+"""
+    missing_eq(a, b)::Bool
+
+Equal to `===` if `a` and `b` are all `missing`, otherwise equal to `==`.
+
+```jldoctest
+julia> missing_eq(missing, missing)
+true
+julia> missing_eq(1, BigInt(1))
+true
+```
+"""
 function missing_eq(a, b)::Bool
     if (ismissing(a) && ismissing(b))
         return true
