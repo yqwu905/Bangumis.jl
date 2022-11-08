@@ -1,3 +1,5 @@
+# This module implement very little functionality of BitTorrent protocol. Only
+# the decode of BEncode, and query seeder from tracker are implement.
 module BitTorrent
 
 export get_seeder_status
@@ -16,7 +18,7 @@ function get_info_hash(torrent_file::AbstractString)::Vector{UInt8}
     return BEncode.bencode(info) |> sha1
 end
 
-function get_seeder_status(torrent_file::AbstractString)::Dict{String, Integer}
+function get_seeder_status(torrent_file::AbstractString)::Dict{String,Integer}
     bdata = BEncode.bdecode(read(torrent_file))
     tracker = bdata["announce"]
     info_hash = get_info_hash(torrent_file) |> String

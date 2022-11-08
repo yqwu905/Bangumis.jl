@@ -11,6 +11,7 @@ const BStr = String
 const BDict = OrderedDict
 const BObject = Union{BStr,BInt,BList,BDict,BByteStr}
 
+
 function bencode(b::BObject)::String
     if (b isa BStr)
         len = length(b)
@@ -59,7 +60,6 @@ function bdecode(data::Vector{UInt8})::BObject
         end
         len = dynamic_parse_int(String(len_buf))
         buf = [popfirst!(data) for _ in 1:len]
-        # return buf
         return String(buf)
         # List decode
     elseif (first_delim == 0x6c)

@@ -8,7 +8,7 @@ function query_tracker(
     tracker::AbstractString,
     info_hash::AbstractString,
     left::Integer,
-    peer_id::Union{Nothing, AbstractString} = nothing,
+    peer_id::Union{Nothing,AbstractString}=nothing,
     port=6881,
     uploaded=0,
     downloaded=0,
