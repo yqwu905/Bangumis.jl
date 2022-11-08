@@ -1,14 +1,34 @@
 module BEncode
 
+
+using DataStructures
 using ...Bangumis.Utils: dynamic_parse_int
 
 # Type Rename
-const BString = Vector{UInt8};
-const BInt = Integer;
-const BList = Vector;
-const BStr = String;
-const BDict = Dict;
-const BObject = Union{BStr, BInt, BList, BDict};
+const BByteStr = Vector{UInt8}
+const BInt = Integer
+const BList = Vector
+const BStr = String
+const BDict = OrderedDict
+const BObject = Union{BStr,BInt,BList,BDict,BByteStr}
+
+
+function bencode(b::BObject)::String
+    if (b isa BStr)
+        len = length(b)
+        return "$len:$b"
+    elseif (b isa BByteStr)
+        len = length(b)
+        return "$len:$(String(b))"
+    elseif (b isa BInt)
+        return "i$(b)e"
+    elseif (b isa BList)
+        return "l$(join(map(x->bencode(x), b)))e"
+    elseif (b isa BDict)
+        return "d$(join([bencode(k)*bencode(v) for (k,v) in b]))e"
+    end
+end
+
 
 """
     bdecode(data::Vector{UInt8})::BObject
@@ -22,24 +42,23 @@ julia> bdecode(Vector{UInt8}("i32e")
 ```
 """
 function bdecode(data::Vector{UInt8})::BObject
-    first_delim = popfirst!(data);
-
+    first_delim = popfirst!(data)
     # Integer decode
     if (first_delim == 0x69)
-        buf = UInt8[];
-        delim = popfirst!(data);
+        buf = UInt8[]
+        delim = popfirst!(data)
         while (delim != 0x65)
-            push!(buf, delim);
-            delim = popfirst!(data);
+            push!(buf, delim)
+            delim = popfirst!(data)
         end
         return dynamic_parse_int(String(buf))
-    # String decode
-    elseif (first_delim >= 0x31 && first_delim <= 0x39)
-        len_buf = UInt8[];
-        delim = first_delim;
+        # String decode
+    elseif (first_delim >= 0x30 && first_delim <= 0x39)
+        len_buf = UInt8[]
+        delim = first_delim
         while (delim != 0x3a)
-            push!(len_buf, delim);
-            delim = popfirst!(data);
+            push!(len_buf, delim)
+            delim = popfirst!(data)
         end
         len = dynamic_parse_int(String(len_buf))
         buf = [popfirst!(data) for _ in 1:len]
