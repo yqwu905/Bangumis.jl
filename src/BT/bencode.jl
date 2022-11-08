@@ -50,7 +50,7 @@ function bdecode(data::Vector{UInt8})::BObject
         end
         return dynamic_parse_int(String(buf))
         # String decode
-    elseif (first_delim >= 0x31 && first_delim <= 0x39)
+    elseif (first_delim >= 0x30 && first_delim <= 0x39)
         len_buf = UInt8[]
         delim = first_delim
         while (delim != 0x3a)
