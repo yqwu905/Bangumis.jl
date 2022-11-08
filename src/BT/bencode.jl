@@ -11,6 +11,21 @@ const BStr = String
 const BDict = OrderedDict
 const BObject = Union{BStr,BInt,BList,BDict,BByteStr}
 
+function bencode(b::BObject)::String
+    if (b isa BStr)
+        len = length(b)
+        return "$len:$b"
+    elseif (b isa BByteStr)
+        len = length(b)
+        return "$len:$(String(b))"
+    elseif (b isa BInt)
+        return "i$(b)e"
+    elseif (b isa BList)
+        return "l$(join(map(x->bencode(x), b)))e"
+    elseif (b isa BDict)
+        return "d$(join([bencode(k)*bencode(v) for (k,v) in b]))e"
+    end
+end
 
 """
     bdecode(data::Vector{UInt8})::BObject
