@@ -1,5 +1,7 @@
 module BitTorrent
 
+export get_seeder_status
+
 using SHA
 
 include("bencode.jl")
@@ -12,6 +14,19 @@ function get_info_hash(torrent_file::AbstractString)::Vector{UInt8}
         info["pieces"] = Vector{UInt8}(pieces)
     end
     return BEncode.bencode(info) |> sha1
+end
+
+function get_seeder_status(torrent_file::AbstractString)::Dict{String, Integer}
+    bdata = BEncode.bdecode(read(torrent_file))
+    tracker = bdata["announce"]
+    info_hash = get_info_hash(torrent_file) |> String
+    resp = Tracker.query_tracker(tracker, info_hash, 0)
+    info = BEncode.bdecode(resp.body)
+    return Dict(
+        "complete" => get(info, "complete", 0),
+        "downloaded" => get(info, "downloaded", 0),
+        "incomplete" => get(info, "incomplete", 0)
+    )
 end
 
 end
