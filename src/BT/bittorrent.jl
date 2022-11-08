@@ -3,6 +3,7 @@ module BitTorrent
 using SHA
 
 include("bencode.jl")
+include("tracker.jl")
 
 function get_info_hash(torrent_file::AbstractString)::Vector{UInt8}
     info = BEncode.bdecode(read(torrent_file))["info"]
