@@ -2,9 +2,10 @@ name: Run tests
 
 on:
   push:
-    paths:
+    - paths:
       - src/*
       - test/*
+    - pull_requests
 
 jobs:
   test:
