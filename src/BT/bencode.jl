@@ -1,5 +1,6 @@
 module BEncode
 
+using DataStructures
 using ...Bangumis.Utils: dynamic_parse_int
 
 # Type Rename
@@ -54,7 +55,7 @@ function bdecode(data::Vector{UInt8})::BObject
         return list
     # Dict decode
     elseif (first_delim == 0x64)
-        dict = Dict{BObject, BObject}()
+        dict = BDict{BObject,BObject}()
         iskey = true
         key = 0
         while (data[1] != 0x65)
