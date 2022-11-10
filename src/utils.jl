@@ -77,6 +77,21 @@ function missing_eq(a, b)::Bool
     end
 end
 
+"""
+    load_config_to_env()
+Load some configs to ENV.
+"""
+function load_configs_to_env()
+    if (haskey(config["http"], "proxy"))
+        ENV["http_proxy"] = config["http"]["proxy"]
+    end
+end
+
+"""
+    http_get(url)
+This is a wrapper for HTTP.get. Headers and timeout are set
+according to config, and status_exception are disable.
+"""
 function http_get(url::AbstractString)::HTTP.Messages.Response
     @debug "Send HTTP GET request to $url"
     HTTP.get(url, headers=Dict("User-Agent" => config["http"]["user_agent"]),
