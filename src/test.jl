@@ -2,11 +2,11 @@
 module Test
 
 function power(x)
-    x^2
+    return x^2
 end
 
 function addone(x)
-    x+1
+    return x + 1
 end
 
 end

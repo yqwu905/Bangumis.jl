@@ -1,6 +1,5 @@
 module BEncode
 
-
 using DataStructures
 using ...Bangumis.Utils: dynamic_parse_int
 
@@ -10,8 +9,7 @@ const BInt = Integer
 const BList = Vector
 const BStr = String
 const BDict = OrderedDict
-const BObject = Union{BStr,BInt,BList,BDict,BByteStr}
-
+const BObject = Union{BStr, BInt, BList, BDict, BByteStr}
 
 function bencode(b::BObject)::String
     if (b isa BStr)
@@ -28,7 +26,6 @@ function bencode(b::BObject)::String
         return "d$(join([bencode(k)*bencode(v) for (k,v) in b]))e"
     end
 end
-
 
 """
     bdecode(data::Vector{UInt8})::BObject
@@ -61,9 +58,9 @@ function bdecode(data::Vector{UInt8})::BObject
             delim = popfirst!(data)
         end
         len = dynamic_parse_int(String(len_buf))
-        buf = [popfirst!(data) for _ in 1:len]
+        buf = [popfirst!(data) for _ ∈ 1:len]
         return String(buf)
-    # List decode
+        # List decode
     elseif (first_delim == 0x6c)
         list = BObject[]
         while (data[1] != 0x65)
@@ -71,7 +68,7 @@ function bdecode(data::Vector{UInt8})::BObject
         end
         popfirst!(data)
         return list
-    # Dict decode
+        # Dict decode
     elseif (first_delim == 0x64)
         dict = BDict{BObject, BObject}()
         iskey = true
