@@ -14,7 +14,16 @@ struct Subject
     summary::AbstractString
     air_date::DateTime
     air_weekday::Integer
-    images::NamedTuple{(:large, :common, :medium, :small, :grid),Tuple{AbstractString,AbstractString,AbstractString,AbstractString,AbstractString}}
+    images::NamedTuple{
+        (:large, :common, :medium, :small, :grid),
+        Tuple{
+            AbstractString,
+            AbstractString,
+            AbstractString,
+            AbstractString,
+            AbstractString,
+        },
+    }
 end
 
 struct Episode
@@ -42,8 +51,8 @@ function f((k, v))
     end
 end
 
-const DEFAULT_CONFIG_FILE = joinpath(
-    dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
+const DEFAULT_CONFIG_FILE =
+    joinpath(dirname(dirname(pathof(@__MODULE__))), "data", "config.toml")
 const config = Dict(Iterators.map(f, parsefile(DEFAULT_CONFIG_FILE)))
 
 include("utils.jl")

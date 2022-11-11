@@ -8,11 +8,11 @@ function query_tracker(
     tracker::AbstractString,
     info_hash::AbstractString,
     left::Integer,
-    peer_id::Union{Nothing,AbstractString}=nothing,
-    port=6881,
-    uploaded=0,
-    downloaded=0,
-    event="empty"
+    peer_id::Union{Nothing, AbstractString} = nothing,
+    port = 6881,
+    uploaded = 0,
+    downloaded = 0,
+    event = "empty",
 )
     info_hash = escapeuri(info_hash)
     if (isnothing(peer_id))

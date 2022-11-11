@@ -13,23 +13,23 @@ struct HTTPGetRequests
     url::AbstractString
 end
 
-const DATE_FORMAT = DateFormat.([
-    "d.m.y",
-    "y-m-dTH:M:Ss",
-    "y-m-dTH:M:S"
-])
+const DATE_FORMAT = DateFormat.(["d.m.y", "y-m-dTH:M:Ss", "y-m-dTH:M:S"])
 
 """
     date_parse(s)
+
 Parse given object to datetime, return `DateTime(1970)` if parse failed.
 
 # Arguments
-- `s::Any`: Parse will only work when `s` is `AbstractString`, otherwise `DateTime(1970)` will be returned.
+
+  - `s::Any`: Parse will only work when `s` is `AbstractString`, otherwise `DateTime(1970)` will be returned.
 
 # Examples
+
 ```jldoctest
 julia> date_parse(nothing)
 1970-01-01T00:00:00
+
 julia> date_parse("1980-1-2")
 1980-01-02T00:00:00
 ```
@@ -45,7 +45,7 @@ function date_parse(s::AbstractString)::DateTime
     if (d isa DateTime)
         return d
     end
-    for df in DATE_FORMAT
+    for df ∈ DATE_FORMAT
         d = tryparse(DateTime, s, df)
         if (d isa DateTime)
             return d
@@ -63,6 +63,7 @@ Equal to `===` if `a` and `b` are all `missing`, otherwise equal to `==`.
 ```jldoctest
 julia> missing_eq(missing, missing)
 true
+
 julia> missing_eq(1, BigInt(1))
 true
 ```
@@ -79,6 +80,7 @@ end
 
 """
     load_config_to_env()
+
 Load some configs to ENV.
 """
 function load_configs_to_env()
@@ -89,14 +91,21 @@ end
 
 """
     http_get(url)
+
 This is a wrapper for HTTP.get. Headers and timeout are set
 according to config, and status_exception are disable.
 """
 function http_get(url::AbstractString)::HTTP.Messages.Response
     @debug "Send HTTP GET request to $url"
-    HTTP.get(url, headers=Dict("User-Agent" => config["http"]["user_agent"]),
-        connect_timeout=config["http"]["connect_timeout"], readtimeout=config["http"]["read_timeout"],
-        retry=false, redirect_limit=config["http"]["max_redirects"], status_exception=false)
+    return HTTP.get(
+        url,
+        headers = Dict("User-Agent" => config["http"]["user_agent"]),
+        connect_timeout = config["http"]["connect_timeout"],
+        readtimeout = config["http"]["read_timeout"],
+        retry = false,
+        redirect_limit = config["http"]["max_redirects"],
+        status_exception = false,
+    )
 end
 
 function Base.parse(res::HTTP.Messages.Response)
@@ -109,18 +118,19 @@ end
 
 """
     dynamic_parse_int(s)
+
 Parse `s` to `Integer` with type dynamically according to its value.
-The narrowest type is `Int` associate with your arch, and will be widen to 
+The narrowest type is `Int` associate with your arch, and will be widen to
 `BigInt` until it can store `s`.
 
 # Examples
+
 ```julia-repl
-julia> s1 = string(BigInt(typemax(Int128)) + 1);
-julia> s2 = string(BigInt(typemax(Int128)) - 1);
 julia> typeof(dynamic_parse_int(s1))
-BigInt
+s1 = string(BigInt(typemax(Int128)) + 1);
+
 julia> typeof(dynamic_parse_int(s2))
-Int128
+s2 = string(BigInt(typemax(Int128)) - 1);
 ```
 """
 function dynamic_parse_int(s)::Integer
@@ -135,7 +145,7 @@ function dynamic_parse_int(s)::Integer
             T = widen(T)
         end
     end
-    x
+    return x
 end
 
 end
