@@ -2,8 +2,11 @@ module Bangumis
 
 using Dates: dayofweek
 using ...Bangumis.Utils: http_get, date_parse, parse
+using ...Bangumis.Sources: Source
 using ...Bangumis: Subject
 using JSON
+
+export BangumiTV
 
 const BASE_URL = "https://api.bgm.tv"
 
@@ -36,5 +39,7 @@ function index_sub(id::Integer)::Union{Missing, Subject}
         ),
     )
 end
+
+const BangumiTV = Source("BangumiTV", "https://bangumi.tv", missing, missing, index_sub)
 
 end
