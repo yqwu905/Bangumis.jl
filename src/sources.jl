@@ -1,5 +1,7 @@
 module Sources
 
+export SourceList
+
 """
     Bangumis.Sources.Source(name, url, query, download, index)
 
@@ -35,5 +37,9 @@ function Base.show(io::IO, s::Source)
 end
 
 include("sources/bangumis.jl")
+
+using .Bangumis: BangumiTV
+
+const SourceList = [BangumiTV]
 
 end
