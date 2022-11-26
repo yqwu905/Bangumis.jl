@@ -3,7 +3,7 @@ module Bangumis
 using TOML: parsefile
 using Dates: DateTime
 
-export config, Subject, Episode, start_main_thread, close_main_thread
+export config, Subject, Episode
 
 struct Subject
     id::Integer
@@ -62,7 +62,6 @@ include("database.jl")
 include("schedule.jl")
 include("test.jl")
 using .Schedule
-export Job, Result, create_jobs_pool, job_executator
 include("sources.jl")
 include("BT/bittorrent.jl")
 

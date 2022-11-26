@@ -3,7 +3,7 @@ module Schedule
 using Base
 using Bangumis: config
 
-export Job, Result, create_jobs_pool, job_executator
+export Job, Result, create_jobs_pool, job_executator, start_main_thread, close_main_thread
 
 # Define a job to be executed by executator asynchronously.
 # `id`
