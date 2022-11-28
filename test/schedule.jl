@@ -2,6 +2,7 @@ println("##################################")
 println("#      Test for Schedule         #")
 println("##################################")
 
+using Bangumis.Schedule: Job
 Bangumis.Schedule.start_main_thread()
 
 cases = 1:1000
