@@ -1,7 +1,7 @@
 name = "Bangumis"
 uuid = "ad8dfdfc-bf80-4d0a-b5f0-e1f877673ab7"
 authors = ["pingline <pingline@outlook.com> and contributors"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
